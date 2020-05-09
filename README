@@ -1,0 +1,20 @@
+Install:
+* Must have node and SuperCollider installed. *
+1) Place files in their own folder.
+2) Run 'npm install' in that folder on a terminal
+
+Start:
+1) Run 'node osc-control.js -r REMOTE -t TAG' where REMOTE is the 
+    ip of the person you are sending data to and TAG is a unique
+    name for your messages (like Tom or Max).
+2) Follow the instruction in the SuperCollider file to start
+    the GUI.
+3) Press 'Accept Messages' and then 'Send' (or just 'Send'
+   if you're only sending data).
+
+Stop:
+1) Press 'Stop'.
+2) Stop the node process (with Ctrl + C).
+
+
+

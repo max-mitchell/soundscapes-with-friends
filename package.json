@@ -1,0 +1,19 @@
+{
+  "name": "timara-204-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "osc-control.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Max Mitchell",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "luxon": "^1.23.0",
+    "minimist": "^1.2.5",
+    "nodejs-traceroute": "^1.2.0",
+    "osc": "^2.4.1",
+    "public-ip": "^4.0.1"
+  }
+}
