@@ -32,7 +32,7 @@
 		Window.closeAll;
 		~gui = Window("",
 			Rect(Window.screenBounds.width - 420,
-				Window.screenBounds.height - 320,
+				Window.screenBounds.height - 850,
 				400,
 				675)
 		).front;
