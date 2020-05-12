@@ -249,7 +249,6 @@ let makeIPMessage = function() {
 
 // Listen for messages from SuperCollider
 udpPort.on("message", function (oscMsg, timeTag, info) {
-    console.log(oscMsg);
     if (oscMsg.address == "/getPubIP") {
         sendLocal(makeIPMessage());
     } else if (oscMsg.address == "/doSend") {
@@ -331,7 +330,7 @@ try {
 
 // Random delay for testing
 let toffset = testingOffsetMax / 2;
-/*
+
 // Send messages to remote
 setInterval(function() {
     // Only send messages if told to
@@ -343,10 +342,10 @@ setInterval(function() {
         sendOSC(makeOscMessage(toffset, distanceToRemote, traceHops, TAG));
     }
 }, sendInterval);
-*/
+
 // Some other send loops for testing
 
-
+/*
 let to2 = testingOffsetMax / 2;
 
 setInterval(function() {
@@ -391,4 +390,4 @@ setInterval(function() {
     }
 }, sendInterval * 4);
 
-
+*/
