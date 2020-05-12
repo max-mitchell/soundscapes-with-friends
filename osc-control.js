@@ -2,12 +2,13 @@
 Max Mitchell
 OSC Helper for SuperCollider project
 Use with none, one, or two args
-node osc-control.js [-r remote-ip] [-p remote-port] [-t tag] [-i message-send-interval] [-o test-offset]
+node osc-control.js [-r remote-ip] [--port remote-port] [-t tag] [-i message-send-interval] [-o test-offset] [--demo]
 Ip defaults to 0.0.0.0 (localhost)
 Port defaults to 57120 (OSC default)
 Tag defaults to large random number
 Interval defaults to 500ms
 Offset defaults to 0ms
+Demo defaults to false
 
 Messages include:
     Time in raw seconds the message was sent
