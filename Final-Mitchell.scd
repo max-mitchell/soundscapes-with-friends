@@ -18,7 +18,6 @@
 
 
 
-
 // Makes GUI
 ~makeGui = {
 	// Reboot the server everytime the GUI gets remade
@@ -143,7 +142,6 @@
 // Set max connections at once
 ~maxMsgIn = ~vColMax * ~vRowMax;
 
-
 ~globalInit = {
 	Buffer.freeAll;
 
@@ -155,25 +153,25 @@
 	//   High hits
 	~percD = Dictionary.new;
 	~percD.add(\lows ->
-		PathName(thisProcess.nowExecutingPath.dirname +/+ "lows").files.collect({
+		PathName("lows".asAbsolutePath).files.collect({
 			arg sf;
 			Buffer.read(s, sf.fullPath);
 		});
 	);
 	~percD.add(\mids ->
-		PathName(thisProcess.nowExecutingPath.dirname +/+ "mids").files.collect({
+		PathName("mids".asAbsolutePath).files.collect({
 			arg sf;
 			Buffer.read(s, sf.fullPath);
 		});
 	);
 	~percD.add(\highs ->
-		PathName(thisProcess.nowExecutingPath.dirname +/+ "highs").files.collect({
+		PathName("highs".asAbsolutePath).files.collect({
 			arg sf;
 			Buffer.read(s, sf.fullPath);
 		});
 	);
 	~percD.add(\crash ->
-		PathName(thisProcess.nowExecutingPath.dirname +/+ "crash").files.collect({
+		PathName("crash".asAbsolutePath).files.collect({
 			arg sf;
 			Buffer.read(s, sf.fullPath);
 		});

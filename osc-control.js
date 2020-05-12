@@ -36,18 +36,19 @@ const client = dgram.createSocket('udp4');
 
 // Fetch args and set default values
 let args = minimist(process.argv.slice(2), {
+    string: ['remote', 'tag'],
+    int: ['port', 'testoffset', 'interval'],
+    boolean: 'demo',
     default: {
         remote: "127.0.0.1",
-        local: "127.0.0.1",
         port: 57120,
         testoffset: 0,
         interval: 500,
-        tag: Math.floor(Math.random() * 2**24)
+        tag: Math.floor(Math.random() * 2**24),
+        demo: false
     },
     alias: {
         r: "remote",
-        l: "local",
-        p: "port",
         o: "testoffset",
         i: "interval",
         t: "tag"
@@ -69,13 +70,14 @@ const walkStep = testingOffsetMax / 2;
 let remoteAddr = args.remote;
 let remotePt = args.port;
 
-// Local private IP
-let localAddr = args.local;
 // Local public IP
 let localPublicAddr = "";
 
 // Should the program send OSC data to remote
 let doSend = false;
+
+// Should the program run in demo mode
+const demo = args.demo;
 
 // If there is a Ctr-C, make sure to
 // tell SuperCollider to stop playing,
@@ -106,7 +108,7 @@ let sendOSC = function(msg) {
 
 // Sends OSC message to localhost
 let sendLocal = function(msg) {
-    client.send(msg, 57120, localAddr, (err, bytes) => {
+    client.send(msg, 57120, "127.0.0.1", (err, bytes) => {
         if (err) console.log(err);
     });
 }
@@ -345,49 +347,48 @@ setInterval(function() {
 
 // Some other send loops for testing
 
-/*
-let to2 = testingOffsetMax / 2;
+if (demo) {
+    let to2 = testingOffsetMax / 2;
 
-setInterval(function() {
-    if (doSend) {
-        if (testingOffsetMax > 0) {
-            to2 += randWalk(testingOffsetMax, 0, walkStep, to2);
+    setInterval(function() {
+        if (doSend) {
+            if (testingOffsetMax > 0) {
+                to2 += randWalk(testingOffsetMax, 0, walkStep, to2);
+            }
+            sendOSC(makeOscMessage(to2, 800, 15, "Luke", true));
         }
-        sendOSC(makeOscMessage(to2, 800, 15, "Luke", true));
-    }
-}, sendInterval * 2);
+    }, sendInterval * 2);
 
-let to3 = testingOffsetMax / 2;
+    let to3 = testingOffsetMax / 2;
 
-setInterval(function() {
-    if (doSend) {
-        if (testingOffsetMax > 0) {
-            to3 += randWalk(testingOffsetMax * 0.5, 0, walkStep, to3);
+    setInterval(function() {
+        if (doSend) {
+            if (testingOffsetMax > 0) {
+                to3 += randWalk(testingOffsetMax * 0.5, 0, walkStep, to3);
+            }
+            sendOSC(makeOscMessage(to3, 50, 5, "Jim", true));
         }
-        sendOSC(makeOscMessage(to3, 50, 5, "Jim", true));
-    }
-}, sendInterval * 3);
+    }, sendInterval * 3);
 
-let to4 = testingOffsetMax / 2;
+    let to4 = testingOffsetMax / 2;
 
-setInterval(function() {
-    if (doSend) {
-        if (testingOffsetMax > 0) {
-            to4 += randWalk(testingOffsetMax * 3, 0, walkStep, to4);
+    setInterval(function() {
+        if (doSend) {
+            if (testingOffsetMax > 0) {
+                to4 += randWalk(testingOffsetMax * 3, 0, walkStep, to4);
+            }
+            sendOSC(makeOscMessage(to2, 4000, 23, "Adam", true));
         }
-        sendOSC(makeOscMessage(to2, 4000, 23, "Adam", true));
-    }
-}, sendInterval * 4);
+    }, sendInterval * 4);
 
-let to5 = testingOffsetMax / 2;
+    let to5 = testingOffsetMax / 2;
 
-setInterval(function() {
-    if (doSend) {
-        if (testingOffsetMax > 0) {
-            to5 += randWalk(testingOffsetMax * 0.1, 0, walkStep, to5);
+    setInterval(function() {
+        if (doSend) {
+            if (testingOffsetMax > 0) {
+                to5 += randWalk(testingOffsetMax * 0.1, 0, walkStep, to5);
+            }
+            sendOSC(makeOscMessage(to3, 500, 7, "Mark", false));
         }
-        sendOSC(makeOscMessage(to3, 500, 7, "Mark", false));
-    }
-}, sendInterval * 4);
-
-*/
+    }, sendInterval * 4);
+}
