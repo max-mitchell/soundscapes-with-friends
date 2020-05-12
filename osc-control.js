@@ -38,6 +38,7 @@ const client = dgram.createSocket('udp4');
 let args = minimist(process.argv.slice(2), {
     default: {
         remote: "127.0.0.1",
+        local: "127.0.0.1",
         port: 57120,
         testoffset: 0,
         interval: 500,
@@ -45,6 +46,7 @@ let args = minimist(process.argv.slice(2), {
     },
     alias: {
         r: "remote",
+        l: "local",
         p: "port",
         o: "testoffset",
         i: "interval",
@@ -67,8 +69,10 @@ const walkStep = testingOffsetMax / 2;
 let remoteAddr = args.remote;
 let remotePt = args.port;
 
+// Local private IP
+let localAddr = args.local;
 // Local public IP
-let localAddr = "";
+let localPublicAddr = "";
 
 // Should the program send OSC data to remote
 let doSend = false;
@@ -102,7 +106,7 @@ let sendOSC = function(msg) {
 
 // Sends OSC message to localhost
 let sendLocal = function(msg) {
-    client.send(msg, 57120, "127.0.0.1", (err, bytes) => {
+    client.send(msg, 57120, localAddr, (err, bytes) => {
         if (err) console.log(err);
     });
 }
@@ -232,7 +236,7 @@ let makeIPMessage = function() {
         args: [
             {
                 type: "s",
-                value: localAddr
+                value: localPublicAddr
             },
             {
                 type: "s",
@@ -245,6 +249,7 @@ let makeIPMessage = function() {
 
 // Listen for messages from SuperCollider
 udpPort.on("message", function (oscMsg, timeTag, info) {
+    console.log(oscMsg);
     if (oscMsg.address == "/getPubIP") {
         sendLocal(makeIPMessage());
     } else if (oscMsg.address == "/doSend") {
@@ -297,14 +302,14 @@ try {
 // Get local IP and geo-coordinates
 try {
     (async () => {
-        // Grap local IP
-        localAddr = await publicIp.v4();
+        // Grab local IP
+        localPublicAddr = await publicIp.v4();
         sendLocal(makeIPMessage());
         let localData;
         let remoteData;
 
         // Get local coordinates using IP
-        axios.get(`https://ipvigilante.com/${localAddr}`)
+        axios.get(`https://ipvigilante.com/${localPublicAddr}`)
             .then(function (response) {
                 localData = response.data.data;
                 // Get remote coordinates
