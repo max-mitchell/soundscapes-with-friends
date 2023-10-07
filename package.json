@@ -12,7 +12,7 @@
     "axios": "^0.21.2",
     "luxon": "^1.28.1",
     "minimist": "^1.2.6",
-    "nodejs-traceroute": "^1.2.0",
+    "nodejs-traceroute": "^1.2.1",
     "osc": "^2.4.2",
     "public-ip": "^6.0.1"
   }
