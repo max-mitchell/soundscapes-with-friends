@@ -9,7 +9,7 @@
   "author": "Max Mitchell",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "luxon": "^1.28.1",
     "minimist": "^1.2.6",
     "nodejs-traceroute": "^1.2.0",
